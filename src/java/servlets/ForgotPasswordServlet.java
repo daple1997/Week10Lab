@@ -11,6 +11,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import services.AccountService;
 
 /**
  *
@@ -34,7 +35,6 @@ public class ForgotPasswordServlet extends HttpServlet {
             throws ServletException, IOException {
             getServletContext().getRequestDispatcher("/WEB-INF/forgot.jsp")
                     .forward(request, response);
-
     }
 
     /**
@@ -48,6 +48,11 @@ public class ForgotPasswordServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        AccountService accountService = new AccountService();
+        String email = (String) request.getAttribute("email");
+        if(accountService.forgotPassword(email,getServletContext().getRealPath("/WEB-INF"))){
+            response.sendRedirect("/login");
+        }
         getServletContext().getRequestDispatcher("/WEB-INF/forgot.jsp")
                     .forward(request, response);
     }

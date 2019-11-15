@@ -47,5 +47,18 @@ public class AccountService {
         
         return user;
     }
+
+    public boolean forgotPassword(String email, String path) {
+        UserService userService = new UserService();
+        User user = null;
+        try {
+            user = userService.get(email);
+        } catch (Exception ex) {
+            Logger.getLogger(AccountService.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+        
+        return true;
+    }
     
 }
